@@ -42,20 +42,20 @@
 
 ```mermaid
 flowchart LR
-    S["0. Start\nproduct_json_file / product_json\nextra_user_request / word_count_mode"] --> IF["0B. 判断是否上传文件\n(IF/ELSE)"]
-    IF -- "是 (.json)" --> EX["0C. 读取 JSON 文件内容\n(Document Extractor)"]
-    IF -- "否 (文本/API)" --> MG["0D. 汇聚 JSON 文本\n(Variable Aggregator)"]
+    S["0. Start<br/>JSON 文件 / 文本输入"] --> IF{"0B. 是否上传文件<br/>IF/ELSE"}
+    IF -->|上传 JSON| EX["0C. 读取 JSON 内容<br/>Document Extractor"]
+    IF -->|文本或 API| MG["0D. 汇聚 JSON 文本<br/>Variable Aggregator"]
     EX --> MG
-    MG --> P1["1. 产品解析与事实契约\n(Python Code)\nJSON Path 展平 / 缺失识别"]
-    P1 --> P2["2. GEO 意图与双页大纲规划\n(LLM)\n按品类动态推导选购维度"]
-    P2 --> P3A["3A. 选购指南 Blog 初稿\n(LLM · 并行)\n信息型长文 / FAQ / 站内链"]
-    P2 --> P3B["3B. 产品详情页 PDP 初稿\n(LLM · 并行)\n购买决策型 / 确认参数"]
-    P3A --> P4["4. 事实核查与禁用主张审计\n(LLM · Temp=0.1)\n拦截诱导卖点 / 绑定 JSON 路径"]
+    MG --> P1["1. 产品解析与事实契约<br/>Python Code"]
+    P1 --> P2["2. GEO 意图与大纲规划<br/>LLM"]
+    P2 --> P3A["3A. 选购指南 Blog 初稿<br/>LLM 并行"]
+    P2 --> P3B["3B. 产品详情页 PDP 初稿<br/>LLM 并行"]
+    P3A --> P4["4. 事实核查与主张审计<br/>LLM Temp=0.1"]
     P3B --> P4
-    P4 --> P5["5. 独立“去 AI 味”语言润色\n(LLM · Temp=0.4)\n消除套话 + 输出前后对比"]
-    P5 --> P6["6. JSON-LD 组装与自动质检\n(Python Code)\n程序化 Schema + 6 项校验"]
-    P6 --> P6B["6B. 自动发布到本地预览站\n(HTTP Request · 容错降级)\n推送 preview_server.py 渲染"]
-    P6B --> E["7. End\n预览链接 / 双页终稿\nJSON-LD / 溯源 / 质检报告"]
+    P4 --> P5["5. 独立去 AI 味润色<br/>LLM Temp=0.4"]
+    P5 --> P6["6. JSON-LD 与自动质检<br/>Python Code"]
+    P6 --> P6B["6B. 自动发布到本地预览站<br/>HTTP Request 容错降级"]
+    P6B --> E["7. End<br/>双页终稿 / JSON-LD / QA"]
 ```
 
 **分层解耦设计原则：**
