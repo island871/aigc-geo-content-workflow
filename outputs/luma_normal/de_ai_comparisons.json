@@ -1,0 +1,53 @@
+[
+  {
+    "id": "EDIT-1",
+    "section": "Blog Opening Paragraph",
+    "before_en": "In today's fast-paced world, finding a versatile wardrobe staple that seamlessly transitions from the office to weekend getaways can feel overwhelming. Look no further than the timeless elegance of a 100% linen shirt, which elevates your everyday style while redefining comfort across work, travel, and casual outings.",
+    "after_en": "It is 8:30 on a humid July morning. You step off an air-conditioned commuter train onto a sidewalk that feels like warm steam, and within two blocks a standard cotton dress shirt is already sticking to your shoulder blades. Meanwhile, someone walking ten feet ahead in a relaxed linen shirt looks completely unbothered.",
+    "issues_removed": [
+      "Cliché opener ('In today's fast-paced world', 'Look no further')",
+      "Empty marketing fluff ('seamlessly transitions', 'timeless elegance', 'elevates your everyday style', 'redefining comfort')",
+      "Sales-ad framing instead of a relatable human scene"
+    ],
+    "rationale_zh": "原文堆砌了典型 AI 英文套话（In today's fast-paced world / seamlessly transitions / elevates your everyday style），且一开头就像软广。改写后对标 Real Men Real Style 真实专栏写法，直接切入 7 月早高峰走出空调地铁站的闷热黏腻画面，零套话、代入感强。",
+    "rationale_en": "Replaces stock LLM opener clichés and generic lifestyle praise with a vivid, lived-in July commute scene that hooks readers naturally without sounding like an ad."
+  },
+  {
+    "id": "EDIT-2",
+    "section": "Blog — Fit Matters More in Linen",
+    "before_en": "When it comes to choosing the right fit, it is important to note that a relaxed fit not only provides unparalleled comfort, but also offers effortless sophistication for every occasion. Whether you are heading to a meeting, boarding a flight, or relaxing at a café, this versatile silhouette ensures you always look your best.",
+    "after_en": "In a cotton shirt blended with elastane, narrow armholes forgive a little reaching. Pure linen does not budge. Buy it slim and you feel the seams tug across your upper back the moment you shove a bag into an overhead bin or type at a desk for three hours. Tight fabric also kills the thin pocket of circulating air between the shirt and your skin—throwing away the main reason to wear linen in the first place.",
+    "issues_removed": [
+      "Filler transitions ('When it comes to', 'it is important to note that')",
+      "Repetitive AI cadence ('not only... but also...', 'Whether you are A, B, or C')",
+      "Abstract unverifiable praise ('unparalleled comfort', 'effortless sophistication', 'always look your best')"
+    ],
+    "rationale_zh": "删掉了 'When it comes to / it is important to note that / not only... but also / Whether you are...' 四连击式 AI 句型，改为长短句交错（如短句 'Pure linen does not budge.'）并结合往行李架塞包、伏案打字三小时等真实动作，讲透宽松版型的物理必要性。",
+    "rationale_en": "Eliminates formulaic AI transitional syntax and varied-clause bloat, using punchy sentence rhythm and concrete physical actions (overhead bin, desk typing) to explain why non-stretch linen needs a relaxed cut."
+  },
+  {
+    "id": "EDIT-3",
+    "section": "PDP Decision Summary",
+    "before_en": "Crafted to perfection, the LUMA Everyday Linen Shirt is the ultimate companion for modern shoppers seeking an effortless, breathable, and stylish wardrobe essential for work, travel, and weekends.",
+    "after_en": "This shirt makes sense if you prefer natural airflow and unrestricted movement over rigid, tailored dress-shirt structure. Its relaxed fit gives non-stretch 100% linen room across the shoulders and sleeves, making it comfortable during transit, long desk hours, and casual weekend plans. Skip this style if you need a stiff formal collar for black-tie or strict corporate dress codes.",
+    "issues_removed": [
+      "Hype clichés ('Crafted to perfection', 'ultimate companion', 'modern shoppers')",
+      "One-sided promotional tone lacking buyer qualification criteria"
+    ],
+    "rationale_zh": "去除了 'Crafted to perfection / ultimate companion' 等浮夸空话，改为 PDP 真正需要的“适合谁 / 不适合谁”购买决策视角，既帮用户快速判断，也避免了虚构卖点。",
+    "rationale_en": "Shifts from promotional hyperbole to an honest fit-check framing that tells shoppers both when the shirt fits their needs and when to skip it, strictly staying inside confirmed JSON facts."
+  },
+  {
+    "id": "EDIT-4",
+    "section": "Blog — Product Transition (Where to Spend, Where to Save)",
+    "before_en": "If you would rather not sift through dozens of tabs looking for a baseline, the LUMA Everyday Linen Shirt is one straightforward option that matches those criteria on paper. Priced at USD 59, it pairs 100% linen with a gender-neutral, relaxed long-sleeve cut in White and Light Blue across sizes S through XL. Check the product page for full specs and confirm store shipping or return terms at checkout.",
+    "after_en": "You don't need to drop $150 on a boutique label just to get a solid everyday linen shirt. A straightforward USD 59 option in 100% linen—like the LUMA Everyday Linen Shirt, a gender-neutral relaxed long-sleeve in White and Light Blue—handles hot commutes, travel, and weekend wear without making you baby it.",
+    "issues_removed": [
+      "Stiff compliance phrasing ('matches those criteria on paper')",
+      "Brand-as-subject ad transition that feels abrupt to readers",
+      "Robotic lawyer-style checkout disclaimer tacked onto the end of a blog"
+    ],
+    "rationale_zh": "参考 Real Men Real Style 的真人专栏写法：不再让品牌当主语硬推，也不画蛇添足地提醒“在结账时确认退货条款”，而是先抛出帮读者省钱避坑的真实观点，再在破折号里顺带举出 LUMA 亚麻衬衫作为 59 美元常规款例子，彻底消除软广突兀感。",
+    "rationale_en": "Leads with plainspoken value advice rather than a brand-led sales pitch, weaves the product link parenthetically as a grounded example, and removes stiff compliance sign-offs."
+  }
+]

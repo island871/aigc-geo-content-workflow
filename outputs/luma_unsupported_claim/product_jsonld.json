@@ -1,0 +1,47 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "sku": "LUMA-001",
+  "name": "LUMA Everyday Linen Shirt",
+  "category": "apparel/shirt",
+  "description": "Confirmed facts for the LUMA Everyday Linen Shirt: 100% linen, gender-neutral relaxed fit, White & Light Blue, S–XL, USD 59, gentle cold wash & air dry.",
+  "brand": {
+    "@type": "Brand",
+    "name": "LUMA"
+  },
+  "url": "https://example.com/products/everyday-linen-shirt",
+  "material": "100% linen",
+  "color": [
+    "White",
+    "Light Blue"
+  ],
+  "size": [
+    "S",
+    "M",
+    "L",
+    "XL"
+  ],
+  "additionalProperty": [
+    {
+      "@type": "PropertyValue",
+      "name": "type",
+      "value": "gender-neutral long-sleeve shirt"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "fit",
+      "value": "relaxed fit"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "care",
+      "value": "Gentle wash in cold water; air dry."
+    }
+  ],
+  "offers": {
+    "@type": "Offer",
+    "price": 59,
+    "priceCurrency": "USD",
+    "url": "https://example.com/products/everyday-linen-shirt"
+  }
+}

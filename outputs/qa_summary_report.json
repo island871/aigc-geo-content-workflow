@@ -1,0 +1,410 @@
+[
+  {
+    "case": "luma_normal",
+    "dataset": "A_LUMA_Linen_Shirt",
+    "overall_passed": true,
+    "passed_count": 7,
+    "total_checks": 7,
+    "checks": [
+      {
+        "name": "1_word_count_compliance",
+        "passed": true,
+        "summary": "Blog=1465 words (target 1200-1500), PDP=314 words (target 250-400)",
+        "details": {
+          "blog_words": 1465,
+          "blog_target": [
+            1200,
+            1500
+          ],
+          "pdp_words": 314,
+          "pdp_target": [
+            250,
+            400
+          ],
+          "word_count_mode": "pdf_default"
+        }
+      },
+      {
+        "name": "2_geo_structure_and_meta",
+        "passed": true,
+        "summary": "Blog(H1=1, H2=7, FAQ=4, PDP_Link=True) | PDP(H1=1, H2=3, FAQ=3) | MetaOK=True",
+        "details": {
+          "blog_h1": 1,
+          "blog_h2": 7,
+          "blog_faq": 4,
+          "blog_has_internal_link": true,
+          "pdp_h1": 1,
+          "pdp_h2": 3,
+          "pdp_faq": 3,
+          "meta_lengths": {
+            "blog_title": 57,
+            "blog_desc": 150,
+            "pdp_title": 60,
+            "pdp_desc": 151
+          }
+        }
+      },
+      {
+        "name": "3_unsupported_claim_guardrail",
+        "passed": true,
+        "summary": "Checked 7 forbidden claim patterns; 0 unguarded leaks found",
+        "details": {
+          "forbidden_checked": [
+            "wrinkle-free",
+            "UV protection",
+            "certified sustainable",
+            "free returns",
+            "stock availability",
+            "ratings/reviews",
+            "exact dimensions"
+          ],
+          "leaks": []
+        }
+      },
+      {
+        "name": "4_missing_field_degradation",
+        "passed": true,
+        "summary": "price_missing=False, care_missing=False, issues=0",
+        "details": {
+          "price_missing": false,
+          "care_missing": false,
+          "issues": []
+        }
+      },
+      {
+        "name": "5_jsonld_schema_validity",
+        "passed": true,
+        "summary": "BlogPosting & Product JSON-LD valid=True (0 errors)",
+        "details": {
+          "errors": [],
+          "has_offers": true
+        }
+      },
+      {
+        "name": "6_claim_provenance_grounding",
+        "passed": true,
+        "summary": "8 claims verified against exact JSON paths (min 5), 0 invalid",
+        "details": {
+          "verified_claims": 8,
+          "invalid_claims": []
+        }
+      },
+      {
+        "name": "7_de_ai_editorial_quality",
+        "passed": true,
+        "summary": "AI clichés found=0, Before/After comparison pairs=4",
+        "details": {
+          "cliche_hits": [],
+          "comparison_pairs": 4
+        }
+      }
+    ]
+  },
+  {
+    "case": "luma_unsupported_claim",
+    "dataset": "A_LUMA_Linen_Shirt",
+    "overall_passed": true,
+    "passed_count": 7,
+    "total_checks": 7,
+    "checks": [
+      {
+        "name": "1_word_count_compliance",
+        "passed": true,
+        "summary": "Blog=1242 words (target 1200-1500), PDP=284 words (target 250-400)",
+        "details": {
+          "blog_words": 1242,
+          "blog_target": [
+            1200,
+            1500
+          ],
+          "pdp_words": 284,
+          "pdp_target": [
+            250,
+            400
+          ],
+          "word_count_mode": "pdf_default"
+        }
+      },
+      {
+        "name": "2_geo_structure_and_meta",
+        "passed": true,
+        "summary": "Blog(H1=1, H2=7, FAQ=4, PDP_Link=True) | PDP(H1=1, H2=3, FAQ=3) | MetaOK=True",
+        "details": {
+          "blog_h1": 1,
+          "blog_h2": 7,
+          "blog_faq": 4,
+          "blog_has_internal_link": true,
+          "pdp_h1": 1,
+          "pdp_h2": 3,
+          "pdp_faq": 3,
+          "meta_lengths": {
+            "blog_title": 54,
+            "blog_desc": 151,
+            "pdp_title": 60,
+            "pdp_desc": 152
+          }
+        }
+      },
+      {
+        "name": "3_unsupported_claim_guardrail",
+        "passed": true,
+        "summary": "Checked 11 forbidden claim patterns; 0 unguarded leaks found",
+        "details": {
+          "forbidden_checked": [
+            "wrinkle-free",
+            "UV protection",
+            "certified sustainable",
+            "free returns",
+            "stock availability",
+            "ratings/reviews",
+            "exact dimensions",
+            "wrinkle-free",
+            "UV-protective",
+            "free 30-day returns",
+            "30-day returns"
+          ],
+          "leaks": []
+        }
+      },
+      {
+        "name": "4_missing_field_degradation",
+        "passed": true,
+        "summary": "price_missing=False, care_missing=False, issues=0",
+        "details": {
+          "price_missing": false,
+          "care_missing": false,
+          "issues": []
+        }
+      },
+      {
+        "name": "5_jsonld_schema_validity",
+        "passed": true,
+        "summary": "BlogPosting & Product JSON-LD valid=True (0 errors)",
+        "details": {
+          "errors": [],
+          "has_offers": true
+        }
+      },
+      {
+        "name": "6_claim_provenance_grounding",
+        "passed": true,
+        "summary": "7 claims verified against exact JSON paths (min 5), 0 invalid",
+        "details": {
+          "verified_claims": 7,
+          "invalid_claims": []
+        }
+      },
+      {
+        "name": "7_de_ai_editorial_quality",
+        "passed": true,
+        "summary": "AI clichés found=0, Before/After comparison pairs=0",
+        "details": {
+          "cliche_hits": [],
+          "comparison_pairs": 0
+        }
+      }
+    ]
+  },
+  {
+    "case": "luma_missing_data",
+    "dataset": "A_LUMA_Linen_Shirt_Missing_Data",
+    "overall_passed": true,
+    "passed_count": 7,
+    "total_checks": 7,
+    "checks": [
+      {
+        "name": "1_word_count_compliance",
+        "passed": true,
+        "summary": "Blog=1289 words (target 1200-1500), PDP=291 words (target 250-400)",
+        "details": {
+          "blog_words": 1289,
+          "blog_target": [
+            1200,
+            1500
+          ],
+          "pdp_words": 291,
+          "pdp_target": [
+            250,
+            400
+          ],
+          "word_count_mode": "pdf_default"
+        }
+      },
+      {
+        "name": "2_geo_structure_and_meta",
+        "passed": true,
+        "summary": "Blog(H1=1, H2=7, FAQ=4, PDP_Link=True) | PDP(H1=1, H2=3, FAQ=3) | MetaOK=True",
+        "details": {
+          "blog_h1": 1,
+          "blog_h2": 7,
+          "blog_faq": 4,
+          "blog_has_internal_link": true,
+          "pdp_h1": 1,
+          "pdp_h2": 3,
+          "pdp_faq": 3,
+          "meta_lengths": {
+            "blog_title": 57,
+            "blog_desc": 154,
+            "pdp_title": 51,
+            "pdp_desc": 147
+          }
+        }
+      },
+      {
+        "name": "3_unsupported_claim_guardrail",
+        "passed": true,
+        "summary": "Checked 7 forbidden claim patterns; 0 unguarded leaks found",
+        "details": {
+          "forbidden_checked": [
+            "wrinkle-free",
+            "UV protection",
+            "certified sustainable",
+            "free returns",
+            "stock availability",
+            "ratings/reviews",
+            "exact dimensions"
+          ],
+          "leaks": []
+        }
+      },
+      {
+        "name": "4_missing_field_degradation",
+        "passed": true,
+        "summary": "price_missing=True, care_missing=True, issues=0",
+        "details": {
+          "price_missing": true,
+          "care_missing": true,
+          "issues": []
+        }
+      },
+      {
+        "name": "5_jsonld_schema_validity",
+        "passed": true,
+        "summary": "BlogPosting & Product JSON-LD valid=True (0 errors)",
+        "details": {
+          "errors": [],
+          "has_offers": false
+        }
+      },
+      {
+        "name": "6_claim_provenance_grounding",
+        "passed": true,
+        "summary": "6 claims verified against exact JSON paths (min 5), 0 invalid",
+        "details": {
+          "verified_claims": 6,
+          "invalid_claims": []
+        }
+      },
+      {
+        "name": "7_de_ai_editorial_quality",
+        "passed": true,
+        "summary": "AI clichés found=0, Before/After comparison pairs=0",
+        "details": {
+          "cliche_hits": [],
+          "comparison_pairs": 0
+        }
+      }
+    ]
+  },
+  {
+    "case": "orbit_normal",
+    "dataset": "B_ORBIT_Water_Bottle",
+    "overall_passed": true,
+    "passed_count": 7,
+    "total_checks": 7,
+    "checks": [
+      {
+        "name": "1_word_count_compliance",
+        "passed": true,
+        "summary": "Blog=1402 words (target 1200-1500), PDP=308 words (target 250-400)",
+        "details": {
+          "blog_words": 1402,
+          "blog_target": [
+            1200,
+            1500
+          ],
+          "pdp_words": 308,
+          "pdp_target": [
+            250,
+            400
+          ],
+          "word_count_mode": "pdf_default"
+        }
+      },
+      {
+        "name": "2_geo_structure_and_meta",
+        "passed": true,
+        "summary": "Blog(H1=1, H2=7, FAQ=4, PDP_Link=True) | PDP(H1=1, H2=3, FAQ=3) | MetaOK=True",
+        "details": {
+          "blog_h1": 1,
+          "blog_h2": 7,
+          "blog_faq": 4,
+          "blog_has_internal_link": true,
+          "pdp_h1": 1,
+          "pdp_h2": 3,
+          "pdp_faq": 3,
+          "meta_lengths": {
+            "blog_title": 55,
+            "blog_desc": 151,
+            "pdp_title": 58,
+            "pdp_desc": 151
+          }
+        }
+      },
+      {
+        "name": "3_unsupported_claim_guardrail",
+        "passed": true,
+        "summary": "Checked 7 forbidden claim patterns; 0 unguarded leaks found",
+        "details": {
+          "forbidden_checked": [
+            "keeps drinks cold for 24 hours",
+            "leakproof",
+            "dishwasher safe",
+            "BPA-free certification",
+            "lifetime warranty",
+            "stock availability",
+            "verified reviews"
+          ],
+          "leaks": []
+        }
+      },
+      {
+        "name": "4_missing_field_degradation",
+        "passed": true,
+        "summary": "price_missing=False, care_missing=False, issues=0",
+        "details": {
+          "price_missing": false,
+          "care_missing": false,
+          "issues": []
+        }
+      },
+      {
+        "name": "5_jsonld_schema_validity",
+        "passed": true,
+        "summary": "BlogPosting & Product JSON-LD valid=True (0 errors)",
+        "details": {
+          "errors": [],
+          "has_offers": true
+        }
+      },
+      {
+        "name": "6_claim_provenance_grounding",
+        "passed": true,
+        "summary": "8 claims verified against exact JSON paths (min 5), 0 invalid",
+        "details": {
+          "verified_claims": 8,
+          "invalid_claims": []
+        }
+      },
+      {
+        "name": "7_de_ai_editorial_quality",
+        "passed": true,
+        "summary": "AI clichés found=0, Before/After comparison pairs=1",
+        "details": {
+          "cliche_hits": [],
+          "comparison_pairs": 1
+        }
+      }
+    ]
+  }
+]

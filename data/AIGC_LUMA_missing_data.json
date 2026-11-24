@@ -1,0 +1,67 @@
+{
+  "dataset_id": "A_LUMA_Linen_Shirt_Missing_Data",
+  "brand": {
+    "name": "LUMA",
+    "description": "Fictional clothing brand for assessment only"
+  },
+  "product": {
+    "id": "LUMA-001",
+    "name": "Everyday Linen Shirt",
+    "category": "apparel/shirt",
+    "facts": {
+      "type": "gender-neutral long-sleeve shirt",
+      "material": "100% linen",
+      "fit": "relaxed fit",
+      "colors": [
+        "White",
+        "Light Blue"
+      ],
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ]
+    },
+    "target_scenarios": [
+      "work and commute",
+      "travel",
+      "weekends"
+    ]
+  },
+  "target_audience": "English-speaking shoppers evaluating a versatile everyday shirt",
+  "content_requests": {
+    "language": "en",
+    "blog": {
+      "type": "buying_guide",
+      "topic": "How to Choose a Linen Shirt for Work, Travel, and Everyday Wear",
+      "target_words": [
+        600,
+        800
+      ]
+    },
+    "product_page": {
+      "type": "product_detail",
+      "target_words": [
+        250,
+        400
+      ]
+    }
+  },
+  "suggested_paths": {
+    "blog": "/blog/how-to-choose-a-linen-shirt",
+    "product_page": "/products/everyday-linen-shirt"
+  },
+  "unsupported_claims": [
+    "wrinkle-free",
+    "UV protection",
+    "certified sustainable",
+    "free returns",
+    "stock availability",
+    "ratings/reviews",
+    "exact dimensions"
+  ],
+  "test_scenarios": {
+    "missing_data": "Rerun after removing facts.price and facts.care. Avoid invention; adapt page and Product JSON-LD."
+  }
+}

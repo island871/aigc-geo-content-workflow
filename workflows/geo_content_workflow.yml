@@ -1,0 +1,1416 @@
+app:
+  name: GEO Blog + Product Detail Page Workflow (Reusable)
+  description: 'Cross-category GEO content production workflow: Product Parsing -> Intent/Outline -> Parallel Blog & PDP Generation
+    -> Fact Checking -> De-AI Polishing -> JSON-LD Assembly & Automated QA.'
+  icon: 📝
+  icon_background: '#E8F4FD'
+  mode: workflow
+  use_icon_as_answer_icon: false
+dependencies: []
+kind: app
+version: 0.1.5
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      enabled: true
+      number_limits: 1
+      allowed_file_types:
+      - document
+      - custom
+      allowed_file_extensions:
+      - .json
+      - .txt
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+    opening_statement: ''
+    retriever_resource:
+      enabled: false
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+  graph:
+    edges:
+    - id: node_start-source-node_check_file-target
+      type: custom
+      source: node_start
+      sourceHandle: source
+      target: node_check_file
+      targetHandle: target
+      zIndex: 0
+      data:
+        isInIteration: false
+        sourceType: start
+        targetType: if-else
+    - id: node_check_file-true-node_doc_extractor-target
+      type: custom
+      source: node_check_file
+      sourceHandle: 'true'
+      target: node_doc_extractor
+      targetHandle: target
+      zIndex: 0
+      data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: document-extractor
+    - id: node_doc_extractor-source-node_input_merge-target
+      type: custom
+      source: node_doc_extractor
+      sourceHandle: source
+      target: node_input_merge
+      targetHandle: target
+      zIndex: 0
+      data:
+        isInIteration: false
+        sourceType: document-extractor
+        targetType: variable-aggregator
+    - id: node_check_file-false-node_input_merge-target
+      type: custom
+      source: node_check_file
+      sourceHandle: 'false'
+      target: node_input_merge
+      targetHandle: target
+      zIndex: 0
+      data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: variable-aggregator
+    - id: node_input_merge-source-node_parse_product-target
+      type: custom
+      source: node_input_merge
+      sourceHandle: source
+      target: node_parse_product
+      targetHandle: target
+      zIndex: 0
+      data:
+        isInIteration: false
+        sourceType: variable-aggregator
+        targetType: code
+    - id: node_parse_product-source-node_outline_planner-target
+      type: custom
+      source: node_parse_product
+      sourceHandle: source
+      target: node_outline_planner
+      targetHandle: target
+      zIndex: 0
+      data:
+        isInIteration: false
+        sourceType: code
+        targetType: llm
+    - id: node_outline_planner-source-node_blog_draft-target
+      type: custom
+      source: node_outline_planner
+      sourceHandle: source
+      target: node_blog_draft
+      targetHandle: target
+      zIndex: 0
+      data:
+        isInIteration: false
+        sourceType: llm
+        targetType: llm
+    - id: node_outline_planner-source-node_pdp_draft-target
+      type: custom
+      source: node_outline_planner
+      sourceHandle: source
+      target: node_pdp_draft
+      targetHandle: target
+      zIndex: 0
+      data:
+        isInIteration: false
+        sourceType: llm
+        targetType: llm
+    - id: node_blog_draft-source-node_fact_checker-target
+      type: custom
+      source: node_blog_draft
+      sourceHandle: source
+      target: node_fact_checker
+      targetHandle: target
+      zIndex: 0
+      data:
+        isInIteration: false
+        sourceType: llm
+        targetType: llm
+    - id: node_pdp_draft-source-node_fact_checker-target
+      type: custom
+      source: node_pdp_draft
+      sourceHandle: source
+      target: node_fact_checker
+      targetHandle: target
+      zIndex: 0
+      data:
+        isInIteration: false
+        sourceType: llm
+        targetType: llm
+    - id: node_fact_checker-source-node_de_ai_polisher-target
+      type: custom
+      source: node_fact_checker
+      sourceHandle: source
+      target: node_de_ai_polisher
+      targetHandle: target
+      zIndex: 0
+      data:
+        isInIteration: false
+        sourceType: llm
+        targetType: llm
+    - id: node_de_ai_polisher-source-node_jsonld_qa-target
+      type: custom
+      source: node_de_ai_polisher
+      sourceHandle: source
+      target: node_jsonld_qa
+      targetHandle: target
+      zIndex: 0
+      data:
+        isInIteration: false
+        sourceType: llm
+        targetType: code
+    - id: node_jsonld_qa-source-node_auto_publish-target
+      type: custom
+      source: node_jsonld_qa
+      sourceHandle: source
+      target: node_auto_publish
+      targetHandle: target
+      zIndex: 0
+      data:
+        isInIteration: false
+        sourceType: code
+        targetType: http-request
+    - id: node_auto_publish-source-node_end-target
+      type: custom
+      source: node_auto_publish
+      sourceHandle: source
+      target: node_end
+      targetHandle: target
+      zIndex: 0
+      data:
+        isInIteration: false
+        sourceType: http-request
+        targetType: end
+    nodes:
+    - id: node_start
+      type: custom
+      position:
+        x: 40
+        y: 260
+      positionAbsolute:
+        x: 40
+        y: 260
+      sourcePosition: right
+      targetPosition: left
+      width: 244
+      height: 170
+      data:
+        type: start
+        title: 0. 输入产品 JSON
+        desc: 支持直接上传 .json 文件或粘贴 JSON 文本（二选一），兼容任意品类与 API 调用
+        selected: false
+        variables:
+        - label: product_json_file (直接上传产品 .json 文件，推荐)
+          variable: product_json_file
+          type: file
+          required: false
+          allowed_file_types:
+          - custom
+          - document
+          allowed_file_extensions:
+          - .json
+          - .txt
+          allowed_file_upload_methods:
+          - local_file
+          - remote_url
+          options: []
+        - label: product_json (或直接粘贴 JSON 文本 / API 传参)
+          variable: product_json
+          type: paragraph
+          required: false
+          max_length: 16000
+          options: []
+        - label: extra_user_request (可选，用于诱导虚构卖点测试)
+          variable: extra_user_request
+          type: paragraph
+          required: false
+          max_length: 2000
+          options: []
+        - label: word_count_mode (默认按 PDF 1200-1500 词，或按 JSON 覆盖)
+          variable: word_count_mode
+          type: select
+          required: true
+          default: pdf_default
+          options:
+          - pdf_default
+          - json_override
+    - id: node_check_file
+      type: custom
+      position:
+        x: 340
+        y: 260
+      positionAbsolute:
+        x: 340
+        y: 260
+      sourcePosition: right
+      targetPosition: left
+      width: 244
+      height: 126
+      data:
+        type: if-else
+        title: 0B. 判断是否上传文件
+        desc: 若上传了 .json 文件则自动提取文本，否则使用文本框/API 传入的 JSON
+        selected: false
+        cases:
+        - case_id: 'true'
+          id: 'true'
+          logical_operator: and
+          conditions:
+          - id: cond_has_json_file
+            varType: file
+            variable_selector:
+            - node_start
+            - product_json_file
+            comparison_operator: exists
+            value: ''
+    - id: node_doc_extractor
+      type: custom
+      position:
+        x: 640
+        y: 150
+      positionAbsolute:
+        x: 640
+        y: 150
+      sourcePosition: right
+      targetPosition: left
+      width: 244
+      height: 98
+      data:
+        type: document-extractor
+        title: 0C. 读取 JSON 文件内容
+        desc: 自动读取上传的 .json 文件文本内容
+        selected: false
+        is_array_file: false
+        variable_selector:
+        - node_start
+        - product_json_file
+    - id: node_input_merge
+      type: custom
+      position:
+        x: 940
+        y: 260
+      positionAbsolute:
+        x: 940
+        y: 260
+      sourcePosition: right
+      targetPosition: left
+      width: 244
+      height: 108
+      data:
+        type: variable-aggregator
+        title: 0D. 汇聚 JSON 文本
+        desc: 统一文件提取内容与文本框输入，输出给下游解析节点
+        selected: false
+        output_type: string
+        variables:
+        - - node_doc_extractor
+          - text
+        - - node_start
+          - product_json
+        advanced_settings:
+          group_enabled: false
+          groups: []
+    - id: node_parse_product
+      type: custom
+      position:
+        x: 1240
+        y: 260
+      positionAbsolute:
+        x: 1240
+        y: 260
+      sourcePosition: right
+      targetPosition: left
+      width: 244
+      height: 98
+      data:
+        type: code
+        title: 1. 产品解析与事实契约
+        desc: 动态提取 JSON 路径事实、识别缺失字段、生成禁用主张清单与字数范围
+        selected: false
+        code_language: python3
+        code: |
+          import json
+
+
+          def _flatten(obj, prefix=""):
+              flat = {}
+              if isinstance(obj, dict):
+                  for k, v in obj.items():
+                      path = f"{prefix}.{k}" if prefix else k
+                      if isinstance(v, dict):
+                          flat.update(_flatten(v, path))
+                      elif isinstance(v, list):
+                          flat[path] = ", ".join(str(x) for x in v)
+                      elif v is not None and str(v).strip() != "":
+                          flat[path] = str(v)
+              return flat
+
+
+          def main(product_json: str, extra_user_request: str, word_count_mode: str) -> dict:
+              raw = (product_json or "").strip()
+              if raw.startswith("```"):
+                  lines = raw.splitlines()
+                  raw = "\n".join(lines[1:-1] if lines[-1].strip().startswith("```") else lines[1:])
+
+              data = json.loads(raw)
+
+              brand = data.get("brand", {}) or {}
+              product = data.get("product", {}) or {}
+              facts = product.get("facts", {}) or {}
+              content_req = data.get("content_requests") if isinstance(data.get("content_requests"), dict) else {}
+              blog_req = content_req.get("blog") if isinstance(content_req.get("blog"), dict) else {}
+              pdp_req = content_req.get("product_page") if isinstance(content_req.get("product_page"), dict) else {}
+              paths = data.get("suggested_paths", {}) or {}
+
+              # Flatten ONLY confirmed facts with exact JSON paths for provenance grounding
+              confirmed_flat = {}
+              if brand.get("name"):
+                  confirmed_flat["brand.name"] = str(brand["name"])
+              for key in ("id", "name", "category"):
+                  if product.get(key):
+                      confirmed_flat[f"product.{key}"] = str(product[key])
+              confirmed_flat.update(_flatten(facts, "product.facts"))
+              if product.get("target_scenarios"):
+                  confirmed_flat["product.target_scenarios"] = ", ".join(
+                      str(s) for s in product["target_scenarios"]
+                  )
+
+              # Detect absent common commerce attributes (generic, category-agnostic)
+              missing_fields = []
+              price_obj = facts.get("price")
+              if not isinstance(price_obj, dict) or price_obj.get("value") is None:
+                  missing_fields.append("product.facts.price")
+              if not facts.get("care"):
+                  missing_fields.append("product.facts.care")
+              if not facts.get("colors"):
+                  missing_fields.append("product.facts.colors")
+              if not facts.get("material"):
+                  missing_fields.append("product.facts.material")
+
+              # Resolve word count strategy: PDF default (1200-1500) vs JSON override (e.g. 600-800)
+              mode = (word_count_mode or "pdf_default").strip().lower()
+              json_blog_range = blog_req.get("target_words", [600, 800])
+              if mode == "json_override" and isinstance(json_blog_range, list) and len(json_blog_range) == 2:
+                  blog_range = [int(json_blog_range[0]), int(json_blog_range[1])]
+              else:
+                  blog_range = [1200, 1500]
+
+              json_pdp_range = pdp_req.get("target_words", [250, 400])
+              if isinstance(json_pdp_range, list) and len(json_pdp_range) == 2:
+                  pdp_range = [int(json_pdp_range[0]), int(json_pdp_range[1])]
+              else:
+                  pdp_range = [250, 400]
+
+              unsupported_claims = data.get("unsupported_claims", []) or []
+              extra_req = (extra_user_request or "").strip() or "None"
+
+              return {
+                  "normalized_product_json": json.dumps(data, ensure_ascii=False, indent=2),
+                  "confirmed_facts_flat": json.dumps(confirmed_flat, ensure_ascii=False, indent=2),
+                  "missing_fields_json": json.dumps(missing_fields, ensure_ascii=False),
+                  "unsupported_claims_json": json.dumps(unsupported_claims, ensure_ascii=False),
+                  "extra_user_request_clean": extra_req,
+                  "brand_name": str(brand.get("name", "")),
+                  "product_name": str(product.get("name", "")),
+                  "product_category": str(product.get("category", "general")),
+                  "blog_topic": str(blog_req.get("topic", f"How to Choose {product.get('name', 'This Product')}")),
+                  "blog_word_range": f"{blog_range[0]}-{blog_range[1]}",
+                  "pdp_word_range": f"{pdp_range[0]}-{pdp_range[1]}",
+                  "suggested_blog_path": str(paths.get("blog", "/blog/buying-guide")),
+                  "suggested_pdp_path": str(paths.get("product_page", "/products/item")),
+              }
+        variables:
+        - variable: product_json
+          value_selector:
+          - node_input_merge
+          - output
+        - variable: extra_user_request
+          value_selector:
+          - node_start
+          - extra_user_request
+        - variable: word_count_mode
+          value_selector:
+          - node_start
+          - word_count_mode
+        outputs:
+          normalized_product_json:
+            type: string
+            children: null
+          confirmed_facts_flat:
+            type: string
+            children: null
+          missing_fields_json:
+            type: string
+            children: null
+          unsupported_claims_json:
+            type: string
+            children: null
+          extra_user_request_clean:
+            type: string
+            children: null
+          brand_name:
+            type: string
+            children: null
+          product_name:
+            type: string
+            children: null
+          product_category:
+            type: string
+            children: null
+          blog_topic:
+            type: string
+            children: null
+          blog_word_range:
+            type: string
+            children: null
+          pdp_word_range:
+            type: string
+            children: null
+          suggested_blog_path:
+            type: string
+            children: null
+          suggested_pdp_path:
+            type: string
+            children: null
+    - id: node_outline_planner
+      type: custom
+      position:
+        x: 1560
+        y: 260
+      positionAbsolute:
+        x: 1560
+        y: 260
+      sourcePosition: right
+      targetPosition: left
+      width: 244
+      height: 98
+      data:
+        type: llm
+        title: 2. GEO 意图与双页大纲规划
+        desc: 按品类自动推导选购维度，规划信息型 Blog 与购买决策型 PDP 大纲
+        selected: false
+        context:
+          enabled: false
+          variable_selector: []
+        model:
+          provider: langgenius/openai/openai
+          name: gpt-4o
+          mode: chat
+          completion_params:
+            temperature: 0.3
+        prompt_template:
+        - id: node_outline_planner_sys
+          role: system
+          text: |-
+            You are a senior Generative Engine Optimization (GEO) strategist and editorial director modeling the plainspoken, reader-first journalism of *Real Men Real Style*, *REI Expert Advice*, and *The Strategist*.
+            Your job is to plan two complementary English pages from ANY structured product JSON — with ZERO category hardcoding.
+
+            RULES:
+            1. STRICT FACT BOUNDARY: Only treat entries inside `confirmed_facts_flat` as product facts. Never invent specifications, certifications, testing numbers, warranties, return policies, inventory, shipping terms, or reviews.
+            2. MISSING FIELDS: Any field listed in `missing_fields` MUST NOT be guessed or promised in either page outline. Adapt the outline naturally so the page stays useful without fabricating missing specs.
+            3. UNSUPPORTED CLAIMS GUARDRAIL: Never plan sections or claims asserting anything in `unsupported_claims` or unverified demands inside `extra_user_request`. Log rejected demands under `rejected_user_requests`.
+            4. EDITORIAL BLOG ARCHITECTURE (NO AD-COPY STRUCTURE):
+               - Opening hook: Plan a vivid, relatable 2-sentence everyday frustration scene specific to `product.category` (NO brand mention in the intro!).
+               - Follow the intro with a concise `## Key Takeaways` block (4 bullets) for both human skimmers and AI answer engines.
+               - Plan 3–4 natural, unnumbered editorial H2s (NEVER use `1. / 2. / 3.` textbook numbering and NEVER plan a separate promotional H2 named after the brand or "Grounded Product Example").
+               - Plan one `## Where to Spend, Where to Save, and What to Check` section that leads with honest shopper value advice, a 5-bullet universal checklist, and ONE understated parenthetical mention of the brand's product (`like the [Brand Product Name](suggested_pdp_path)`).
+               - Plan a `## Frequently Asked Questions` section with at least 3 sharp shopper Q&As.
+               - Do NOT plan lawyer-style checkout/return-policy reminders in normal articles; simply omit unconfirmed terms cleanly.
+            5. PRODUCT DETAIL PAGE ARCHITECTURE (`product_detail`):
+               - Purchase-decision intent ("Is this specific product right for me?").
+               - Focus strictly on confirmed product attributes, fit/scenario suitability, care (if provided), and >=3 transparent purchase FAQs.
+
+            OUTPUT FORMAT:
+            Return ONLY valid JSON (no prose outside JSON) matching this schema:
+            {
+              "category_buying_dimensions": ["string (4-6 dimensions tailored to this product category)"],
+              "blog_plan": {
+                "search_intent": "informational",
+                "meta_title": "string (50-60 chars)",
+                "meta_description": "string (140-160 chars)",
+                "h1": "string",
+                "target_word_range": [1200, 1500],
+                "lived_in_opening_scene": "string (vivid everyday frustration for this category, zero brand mention)",
+                "key_takeaways_plan": ["string (4 concise bullets)"],
+                "sections": [
+                  {"h2": "string (natural, unnumbered editorial title)", "purpose": "string", "opening_direct_answer_angle": "string (natural lead sentence, NO literal 'Direct answer:' label)", "fact_boundary_note": "general_advice | parenthetical_product_example"}
+                ],
+                "faq_questions": ["string (at least 3)"],
+                "internal_link_anchor_plan": "string (parenthetical value-advice anchor pointing to suggested_paths.product_page)"
+              },
+              "pdp_plan": {
+                "search_intent": "purchase_decision",
+                "meta_title": "string (50-60 chars)",
+                "meta_description": "string (140-160 chars)",
+                "h1": "string",
+                "target_word_range": [250, 400],
+                "sections": [
+                  {"h2": "string", "confirmed_facts_to_cover": ["json_path"]}
+                ],
+                "faq_questions": ["string (at least 3)"]
+              },
+              "rejected_user_requests": [
+                {"requested_claim": "string", "reason": "string"}
+              ]
+            }
+        - id: node_outline_planner_usr
+          role: user
+          text: |-
+            Product Category: {{#node_parse_product.product_category#}}
+            Brand & Product: {{#node_parse_product.brand_name#}} {{#node_parse_product.product_name#}}
+            Blog Topic: {{#node_parse_product.blog_topic#}}
+            Target Blog Word Range: {{#node_parse_product.blog_word_range#}}
+            Target PDP Word Range: {{#node_parse_product.pdp_word_range#}}
+            Suggested Blog Path: {{#node_parse_product.suggested_blog_path#}}
+            Suggested PDP Path: {{#node_parse_product.suggested_pdp_path#}}
+
+            Confirmed Facts (Exact JSON Paths):
+            {{#node_parse_product.confirmed_facts_flat#}}
+
+            Missing Fields (DO NOT INVENT):
+            {{#node_parse_product.missing_fields_json#}}
+
+            Unsupported Claims (FORBIDDEN):
+            {{#node_parse_product.unsupported_claims_json#}}
+
+            Extra User Request (Inspect & Reject Any Unverified Claims):
+            {{#node_parse_product.extra_user_request_clean#}}
+        variables: []
+        vision:
+          enabled: false
+    - id: node_blog_draft
+      type: custom
+      position:
+        x: 1900
+        y: 120
+      positionAbsolute:
+        x: 1900
+        y: 120
+      sourcePosition: right
+      targetPosition: left
+      width: 244
+      height: 98
+      data:
+        type: llm
+        title: 3A. 选购指南 Blog 初稿生成
+        desc: 生成信息型选购指南（默认 1200-1500 词），含直答段落、清单、>=3 FAQ 与站内链接
+        selected: false
+        context:
+          enabled: false
+          variable_selector: []
+        model:
+          provider: langgenius/openai/openai
+          name: gpt-4o
+          mode: chat
+          completion_params:
+            temperature: 0.5
+        prompt_template:
+        - id: node_blog_draft_sys
+          role: system
+          text: |-
+            You are an experienced English consumer-product editor writing an authoritative, GEO-optimized Buying Guide Blog post.
+
+            STRICT REQUIREMENTS:
+            1. WORD COUNT: Stay strictly inside the target word range given in `blog_word_range` (default 1200-1500 English words unless overridden). Aim for the middle of the range (e.g., 1,280-1,420 words for a 1200-1500 target) so the body + checklist + 3-4 concise FAQs NEVER exceed the upper bound.
+            2. INTENT & NEUTRALITY: Write for a real shopper deciding how to buy in this category (`product.category`), NOT as a brand advertisement. Open with a vivid, relatable lived-in scene (zero brand drop in the intro!) followed by a concise `## Key Takeaways` block for skimmers and GEO extraction. Keep 85%+ of the guide focused on honest category criteria, real trade-offs, and practical habits. Instead of bolting on a brand-named H2 or making the brand the subject of a sales pitch, introduce `[Brand Product Name](/products/...)` parenthetically inside a plainspoken `## Where to Spend, Where to Save, and What to Check` section using the EXACT URL string provided in `Suggested PDP Link Path` (NEVER output literal `{{...}}` template braces), strictly grounded in confirmed facts.
+            3. FACT BOUNDARY:
+               - Clearly distinguish GENERAL BUYING ADVICE ("What to look for when choosing...") from SPECIFIC PRODUCT CLAIMS ("What {{brand_name}} {{product_name}} offers...").
+               - For the specific product, ONLY state facts present in `confirmed_facts_flat`.
+               - NEVER assert any item in `unsupported_claims` or unverified claims injected via `extra_user_request`.
+               - NEVER fabricate values for any field in `missing_fields`.
+            4. GEO OPTIMIZATION:
+               - Use one clear `# H1` and natural, reader-centric `## H2` / `### H3` headings (NO textbook `1. / 2. / 3.` numbered H2s).
+               - Start major H2 sections with a crisp, natural 1–2 sentence direct-answer opening paragraph that AI answer engines can quote cleanly—NEVER print robotic literal labels like `**Direct answer:**`.
+               - Include a practical markdown buying checklist or comparison table (generic category trade-offs, never fake specs for the product).
+               - Include a `## Frequently Asked Questions` section with at least 3 specific, non-fluffy Q&As (`### Question?` followed by direct answer).
+               - Include at least one natural internal link to `suggested_pdp_path` using markdown `[anchor text](path)`.
+            5. STYLE (AUTHENTIC EDITORIAL VOICE): Write like a seasoned human editor at *Proper Cloth*, *REI Expert Advice*, or *Gear Patrol*. Vary sentence lengths, ground advice in vivid physical everyday moments (e.g., daylight opacity test, overhead luggage pull, backpack side-pocket fit), and avoid robotic meta-headings, abrupt promotional brand H2s, or stiff compliance sign-offs (NEVER write "Check the product page for full specs and confirm store shipping or return terms at checkout" or "Notice what is not claimed here"—simply omit unconfirmed claims cleanly rather than adding lawyer-style checkout reminders).
+
+            OUTPUT:
+            Return clean Markdown starting directly with `# <H1 Title>` (no YAML frontmatter, no wrapping code fences).
+        - id: node_blog_draft_usr
+          role: user
+          text: |-
+            Target Word Range: {{#node_parse_product.blog_word_range#}} words
+            Brand & Product: {{#node_parse_product.brand_name#}} {{#node_parse_product.product_name#}}
+            Category: {{#node_parse_product.product_category#}}
+            Suggested PDP Link Path: {{#node_parse_product.suggested_pdp_path#}}
+
+            GEO Outline Plan:
+            {{#node_outline_planner.text#}}
+
+            Confirmed Facts (Exact JSON Paths):
+            {{#node_parse_product.confirmed_facts_flat#}}
+
+            Missing Fields (DO NOT INVENT):
+            {{#node_parse_product.missing_fields_json#}}
+
+            Unsupported Claims (FORBIDDEN):
+            {{#node_parse_product.unsupported_claims_json#}}
+
+            Extra User Request (Do NOT assert unverified claims):
+            {{#node_parse_product.extra_user_request_clean#}}
+        variables: []
+        vision:
+          enabled: false
+    - id: node_pdp_draft
+      type: custom
+      position:
+        x: 1900
+        y: 400
+      positionAbsolute:
+        x: 1900
+        y: 400
+      sourcePosition: right
+      targetPosition: left
+      width: 244
+      height: 98
+      data:
+        type: llm
+        title: 3B. 产品详情页 PDP 初稿生成
+        desc: 生成购买决策型详情页（250-400 词），含确认参数、适用判断与 >=3 购买 FAQ
+        selected: false
+        context:
+          enabled: false
+          variable_selector: []
+        model:
+          provider: langgenius/openai/openai
+          name: gpt-4o
+          mode: chat
+          completion_params:
+            temperature: 0.4
+        prompt_template:
+        - id: node_pdp_draft_sys
+          role: system
+          text: |-
+            You are an e-commerce conversion copywriter and GEO specialist writing a concise, trustworthy English Product Detail Page (PDP).
+
+            STRICT REQUIREMENTS:
+            1. WORD COUNT: Stay strictly inside `pdp_word_range` (250-400 English words total, including headings and FAQs). Aim for 300-355 words total so you NEVER exceed 400 words. Keep `## Purchase FAQ` to exactly 3 tight Q&As (25-35 words per answer).
+            2. BUYER LENS ("Is this product right for me?"):
+               - Open with a direct-answer summary stating what the product is, who/what scenarios it fits, and its confirmed core specs.
+               - Present confirmed attributes cleanly (material, type/design, fit/capacity/lid, available colors, sizes, price, care, target scenarios — ONLY those actually present in `confirmed_facts_flat`).
+               - Help the shopper decide whether it matches their routine without hype or invented promises.
+            3. ZERO HALLUCINATION & MISSING-DATA GRACEFUL DEGRADATION:
+               - NEVER invent, estimate, or imply values for fields in `missing_fields` (e.g., if price is missing, do not write a price, discount, or "affordable"; if care is missing, do not invent washing instructions).
+               - NEVER assert any claim in `unsupported_claims` or unverified assertions injected in `extra_user_request` (e.g., no warranty, returns, certifications, lab metrics, stock status, or customer ratings).
+               - If a buyer FAQ touches a detail not provided in the JSON, answer transparently that the specification is not listed in the current product data rather than guessing.
+            4. GEO STRUCTURE:
+               - Use one `# H1` (`<Brand> <Product Name>`) and clean `## H2` sections (e.g., `## Quick Fit Check`, `## Confirmed Specifications`, `## Best Use Scenarios`, `## Purchase FAQ`).
+               - Include at least 3 purchase-decision FAQs (`### Question?` + crisp factual answer).
+               - Optionally include a natural internal link back to the buying guide `suggested_blog_path` for readers still comparing options.
+
+            OUTPUT:
+            Return clean Markdown starting directly with `# <H1 Title>` (no wrapping code fences).
+        - id: node_pdp_draft_usr
+          role: user
+          text: |-
+            Target Word Range: {{#node_parse_product.pdp_word_range#}} words
+            Brand & Product: {{#node_parse_product.brand_name#}} {{#node_parse_product.product_name#}}
+            Category: {{#node_parse_product.product_category#}}
+            Suggested Blog Link Path: {{#node_parse_product.suggested_blog_path#}}
+
+            GEO Outline Plan:
+            {{#node_outline_planner.text#}}
+
+            Confirmed Facts (Exact JSON Paths):
+            {{#node_parse_product.confirmed_facts_flat#}}
+
+            Missing Fields (DO NOT INVENT):
+            {{#node_parse_product.missing_fields_json#}}
+
+            Unsupported Claims (FORBIDDEN):
+            {{#node_parse_product.unsupported_claims_json#}}
+
+            Extra User Request (Do NOT assert unverified claims):
+            {{#node_parse_product.extra_user_request_clean#}}
+        variables: []
+        vision:
+          enabled: false
+    - id: node_fact_checker
+      type: custom
+      position:
+        x: 2240
+        y: 260
+      positionAbsolute:
+        x: 2240
+        y: 260
+      sourcePosition: right
+      targetPosition: left
+      width: 244
+      height: 98
+      data:
+        type: llm
+        title: 4. 事实核查与禁用主张审计
+        desc: 核验双页主张并映射 JSON 路径来源，拦截诱导虚构卖点与缺失字段臆测
+        selected: false
+        context:
+          enabled: false
+          variable_selector: []
+        model:
+          provider: langgenius/openai/openai
+          name: gpt-4o
+          mode: chat
+          completion_params:
+            temperature: 0.1
+        prompt_template:
+        - id: node_fact_checker_sys
+          role: system
+          text: |-
+            You are a strict Fact-Checking & Compliance Auditor for e-commerce GEO content.
+            Your sole mission is to verify `blog_draft` and `pdp_draft` against `confirmed_facts_flat`, `missing_fields`, `unsupported_claims`, and `extra_user_request`.
+
+            AUDIT PROTOCOL:
+            1. PRODUCT CLAIM CHECK: Every sentence describing the specific brand/product MUST trace directly to `confirmed_facts_flat`. General category buying advice in the Blog is allowed ONLY when clearly framed as general shopper guidance (never attributed as a feature of this specific product).
+            2. UNSUPPORTED CLAIM INTERCEPTION:
+               - Inspect both drafts for any phrase asserting items in `unsupported_claims` or unverified demands in `extra_user_request`.
+               - Remove or rewrite any offending claim. Record every intercepted request/claim in `blocked_claims`.
+            3. MISSING FIELD CHECK:
+               - Confirm that none of the fields in `missing_fields` (such as omitted `price` or `care`) have been guessed, approximated, or smuggled in.
+               - If any draft invented a missing field, remove it and log the fix in `audit_fixes`.
+            4. CLAIM PROVENANCE TABLE:
+               - Extract at least 5 distinct confirmed product claims that appear in the audited Blog/PDP and map each claim to its exact `json_path` from `confirmed_facts_flat` and exact `source_value`.
+            5. PRESERVE WORD COUNT & STRUCTURE: Keep the Blog inside `blog_word_range` and the PDP inside `pdp_word_range`, retaining `# H1`, `## H2`, `>=3 FAQs`, and the internal markdown link.
+
+            OUTPUT FORMAT:
+            Return ONLY valid JSON:
+            {
+              "fact_checked_blog_md": "string",
+              "fact_checked_pdp_md": "string",
+              "claim_provenance": [
+                {
+                  "claim_id": "C1",
+                  "claim_text": "string (verbatim or concise claim from the generated pages)",
+                  "appears_in": "blog | pdp | both",
+                  "json_path": "string (exact key from confirmed_facts_flat, e.g. product.facts.material)",
+                  "source_value": "string"
+                }
+              ],
+              "blocked_claims": [
+                {
+                  "claim": "string",
+                  "source": "unsupported_claims | extra_user_request | draft_hallucination",
+                  "action_taken": "string"
+                }
+              ],
+              "missing_fields_verified_absent": ["string"],
+              "audit_fixes": ["string"]
+            }
+        - id: node_fact_checker_usr
+          role: user
+          text: |-
+            Target Blog Word Range: {{#node_parse_product.blog_word_range#}}
+            Target PDP Word Range: {{#node_parse_product.pdp_word_range#}}
+
+            Confirmed Facts (Exact JSON Paths):
+            {{#node_parse_product.confirmed_facts_flat#}}
+
+            Missing Fields (Must NOT be fabricated):
+            {{#node_parse_product.missing_fields_json#}}
+
+            Unsupported Claims (Forbidden):
+            {{#node_parse_product.unsupported_claims_json#}}
+
+            Extra User Request:
+            {{#node_parse_product.extra_user_request_clean#}}
+
+            === BLOG DRAFT ===
+            {{#node_blog_draft.text#}}
+
+            === PDP DRAFT ===
+            {{#node_pdp_draft.text#}}
+        variables: []
+        vision:
+          enabled: false
+    - id: node_de_ai_polisher
+      type: custom
+      position:
+        x: 2580
+        y: 260
+      positionAbsolute:
+        x: 2580
+        y: 260
+      sourcePosition: right
+      targetPosition: left
+      width: 244
+      height: 98
+      data:
+        type: llm
+        title: 5. 独立“去 AI 味”语言润色
+        desc: 去除空泛赞美、套路开头与重复句式，输出终稿、Meta 与 >=2 组改写前后对比
+        selected: false
+        context:
+          enabled: false
+          variable_selector: []
+        model:
+          provider: langgenius/openai/openai
+          name: gpt-4o
+          mode: chat
+          completion_params:
+            temperature: 0.4
+        prompt_template:
+        - id: node_de_ai_polisher_sys
+          role: system
+          text: |-
+            You are a native-English senior magazine & commerce copy editor specializing in removing "AI-sounding" prose while preserving GEO clarity and 100% factual accuracy.
+
+            WHAT TO ELIMINATE ("AI 味"):
+            1. Cliché openings & filler transitions: "In today's fast-paced world", "When it comes to...", "Whether you're X or Y", "Look no further", "In conclusion", "It's important to note that", "Not only... but also...".
+            2. Empty marketing hype & generic superlatives: "elevate your everyday", "seamlessly transitions", "ultimate companion", "effortless sophistication", "timeless elegance", "game-changer", "redefines comfort", "crafted to perfection".
+            3. Repetitive cadence: Three-item parallel lists in every paragraph, uniform sentence lengths, or robotic restatement of the product name and keywords in every sentence.
+            4. Vague abstractions, literal GEO tags & abrupt product plugs: Replace abstract praise with vivid lived-in scenes and plainspoken advice (modeled on *Real Men Real Style* and *The Strategist*). Strip mechanical prompt artifacts like `**Direct answer:**`, numbered textbook H2s (`1. / 2. / 3.`), stiff compliance phrases ("matches those criteria on paper", "Check the product page for full specs and confirm store shipping or return terms at checkout"), abrupt promotional brand H2s, and breathless single-sentence JSON spec dumps. Make shopper value advice the subject of the sentence and weave the single product mention casually as a parenthetical example (`like the [Brand Product Name]`).
+
+            NON-NEGOTIABLE GUARDRAILS:
+            - DO NOT add any new product facts, numbers, certifications, return policies, or claims not present in `confirmed_facts_flat`.
+            - DO NOT reintroduce anything listed in `unsupported_claims` or `missing_fields`.
+            - Keep `final_blog_md` strictly within `blog_word_range` (if near or over the upper limit, tighten prose so a 1200-1500 target lands around 1280-1420 words) and `final_pdp_md` strictly within `pdp_word_range` (trim if over 400 words—aim for 300-360 words).
+            - Keep all `# H1`, `## H2`, `>=3 FAQs`, and the exact markdown internal link URL from `Suggested PDP Link Path` (e.g. `[Brand Product Name](/products/...)`—NEVER leave literal `{{suggested_pdp_path}}` braces).
+            - Provide at least 2 concrete Before / After English comparisons (`de_ai_comparisons`) showing verbatim excerpts BEFORE this edit and AFTER this edit, explaining specifically what AI-style issue was fixed and why the revision reads more naturally.
+
+            OUTPUT FORMAT:
+            Return ONLY valid JSON:
+            {
+              "final_blog_md": "string",
+              "final_pdp_md": "string",
+              "blog_meta": {
+                "title": "string (50-60 chars)",
+                "description": "string (140-160 chars)"
+              },
+              "pdp_meta": {
+                "title": "string (50-60 chars)",
+                "description": "string (140-160 chars)"
+              },
+              "de_ai_comparisons": [
+                {
+                  "id": "EDIT-1",
+                  "section": "string",
+                  "before_en": "string",
+                  "after_en": "string",
+                  "issues_removed": ["string"],
+                  "rationale_zh": "string (concise Chinese explanation of why this removes AI tone)",
+                  "rationale_en": "string (concise English editorial rationale)"
+                }
+              ]
+            }
+        - id: node_de_ai_polisher_usr
+          role: user
+          text: |-
+            Target Blog Word Range: {{#node_parse_product.blog_word_range#}}
+            Target PDP Word Range: {{#node_parse_product.pdp_word_range#}}
+            Suggested PDP Link Path: {{#node_parse_product.suggested_pdp_path#}}
+
+            Confirmed Facts (Strict Boundary - DO NOT ADD NEW PRODUCT FACTS):
+            {{#node_parse_product.confirmed_facts_flat#}}
+
+            Missing Fields (DO NOT INVENT):
+            {{#node_parse_product.missing_fields_json#}}
+
+            Unsupported Claims (FORBIDDEN):
+            {{#node_parse_product.unsupported_claims_json#}}
+
+            Fact-Checked Content JSON:
+            {{#node_fact_checker.text#}}
+        variables: []
+        vision:
+          enabled: false
+    - id: node_jsonld_qa
+      type: custom
+      position:
+        x: 2920
+        y: 260
+      positionAbsolute:
+        x: 2920
+        y: 260
+      sourcePosition: right
+      targetPosition: left
+      width: 244
+      height: 98
+      data:
+        type: code
+        title: 6. JSON-LD 组装与自动化质检
+        desc: 程序化组装 BlogPosting/Product JSON-LD（缺失字段自动降级）并执行 6 项自动质检
+        selected: false
+        code_language: python3
+        code: |
+          import json
+          import re
+
+
+          def _extract_json(text: str) -> dict:
+              raw = (text or "").strip()
+              if not raw:
+                  return {}
+              fence = re.search(r"```(?:json)?\s*\n(.*?)\n```", raw, flags=re.DOTALL)
+              if fence:
+                  raw = fence.group(1).strip()
+              start = raw.find("{")
+              end = raw.rfind("}")
+              if start != -1 and end != -1 and end > start:
+                  raw = raw[start : end + 1]
+              try:
+                  parsed = json.loads(raw)
+                  return parsed if isinstance(parsed, dict) else {}
+              except Exception:
+                  return {}
+
+
+          def _word_count(md: str) -> int:
+              clean = re.sub(r"```.*?```", " ", md, flags=re.DOTALL)
+              clean = re.sub(r"\[([^\]]+)\]\([^\)]+\)", r"\1", clean)
+              clean = re.sub(r"[#*_`>|]", " ", clean)
+              return len(re.findall(r"[A-Za-z0-9]+(?:['’-][A-Za-z0-9]+)*", clean))
+
+
+          def _count_faqs(md: str) -> int:
+              # Count ### questions inside or after a FAQ heading
+              faq_split = re.split(r"^##\s+.*FAQ.*$", md, flags=re.IGNORECASE | re.MULTILINE)
+              if len(faq_split) < 2:
+                  return len(re.findall(r"^###\s+.*\?", md, flags=re.MULTILINE))
+              return len(re.findall(r"^###\s+.+", faq_split[-1], flags=re.MULTILINE))
+
+
+          def main(
+              normalized_product_json: str,
+              confirmed_facts_flat: str,
+              missing_fields_json: str,
+              unsupported_claims_json: str,
+              blog_word_range: str,
+              pdp_word_range: str,
+              suggested_blog_path: str,
+              suggested_pdp_path: str,
+              fact_checker_raw: str,
+              polisher_raw: str,
+          ) -> dict:
+              product_data = json.loads(normalized_product_json)
+              confirmed_flat = json.loads(confirmed_facts_flat)
+              missing_fields = json.loads(missing_fields_json)
+              unsupported_claims = json.loads(unsupported_claims_json)
+
+              fact_obj = _extract_json(fact_checker_raw)
+              polish_obj = _extract_json(polisher_raw)
+
+              final_blog = polish_obj.get("final_blog_md", fact_obj.get("fact_checked_blog_md", ""))
+              final_pdp = polish_obj.get("final_pdp_md", fact_obj.get("fact_checked_pdp_md", ""))
+              if suggested_pdp_path:
+                  final_blog = final_blog.replace("{{suggested_pdp_path}}", suggested_pdp_path)
+              if suggested_blog_path:
+                  final_pdp = final_pdp.replace("{{suggested_blog_path}}", suggested_blog_path)
+              blog_meta = polish_obj.get("blog_meta", {})
+              pdp_meta = polish_obj.get("pdp_meta", {})
+              claim_provenance = fact_obj.get("claim_provenance", [])
+              blocked_claims = fact_obj.get("blocked_claims", [])
+              de_ai_comparisons = polish_obj.get("de_ai_comparisons", [])
+
+              brand = product_data.get("brand", {}) or {}
+              product = product_data.get("product", {}) or {}
+              facts = product.get("facts", {}) or {}
+              base_url = "https://example.com"
+
+              # 1. Deterministically assemble BlogPosting JSON-LD
+              blog_jsonld = {
+                  "@context": "https://schema.org",
+                  "@type": "BlogPosting",
+                  "headline": blog_meta.get("title") or product_data.get("content_requests", {}).get("blog", {}).get("topic", ""),
+                  "description": blog_meta.get("description", ""),
+                  "inLanguage": product_data.get("content_requests", {}).get("language", "en"),
+                  "mainEntityOfPage": {
+                      "@type": "WebPage",
+                      "@id": f"{base_url}{suggested_blog_path}",
+                  },
+                  "author": {
+                      "@type": "Organization",
+                      "name": brand.get("name", "Editorial Team"),
+                  },
+                  "publisher": {
+                      "@type": "Organization",
+                      "name": brand.get("name", "Editorial Team"),
+                  },
+                  "about": {
+                      "@type": "Thing",
+                      "name": product.get("category", product.get("name", "")),
+                  },
+                  "mentions": {
+                      "@type": "Product",
+                      "name": f"{brand.get('name', '')} {product.get('name', '')}".strip(),
+                      "url": f"{base_url}{suggested_pdp_path}",
+                  },
+              }
+
+              # 2. Deterministically assemble Product JSON-LD (strictly omitting missing fields!)
+              product_jsonld = {
+                  "@context": "https://schema.org",
+                  "@type": "Product",
+                  "sku": product.get("id", ""),
+                  "name": f"{brand.get('name', '')} {product.get('name', '')}".strip(),
+                  "category": product.get("category", ""),
+                  "description": pdp_meta.get("description", ""),
+                  "brand": {
+                      "@type": "Brand",
+                      "name": brand.get("name", ""),
+                  },
+                  "url": f"{base_url}{suggested_pdp_path}",
+              }
+              if facts.get("material"):
+                  product_jsonld["material"] = facts["material"]
+              if facts.get("colors"):
+                  product_jsonld["color"] = facts["colors"]
+              if facts.get("sizes"):
+                  product_jsonld["size"] = facts["sizes"]
+
+              additional_props = []
+              for k, v in facts.items():
+                  if k in ("material", "colors", "sizes", "price"):
+                      continue
+                  if v is not None and str(v).strip() != "":
+                      additional_props.append({
+                          "@type": "PropertyValue",
+                          "name": k,
+                          "value": ", ".join(str(x) for x in v) if isinstance(v, list) else str(v),
+                      })
+              if additional_props:
+                  product_jsonld["additionalProperty"] = additional_props
+
+              # Only include offers when price is actually confirmed (NO fabricated availability or 0 price!)
+              price_obj = facts.get("price")
+              if isinstance(price_obj, dict) and price_obj.get("value") is not None and price_obj.get("currency"):
+                  product_jsonld["offers"] = {
+                      "@type": "Offer",
+                      "price": price_obj["value"],
+                      "priceCurrency": price_obj["currency"],
+                      "url": f"{base_url}{suggested_pdp_path}",
+                  }
+
+              # 3. Run 6 Deterministic Automated QA Checks
+              b_min, b_max = [int(x) for x in blog_word_range.split("-")]
+              p_min, p_max = [int(x) for x in pdp_word_range.split("-")]
+              blog_wc = _word_count(final_blog)
+              pdp_wc = _word_count(final_pdp)
+
+              blog_has_h1 = bool(re.search(r"^#\s+.+", final_blog, flags=re.MULTILINE))
+              blog_h2_count = len(re.findall(r"^##\s+.+", final_blog, flags=re.MULTILINE))
+              blog_faq_count = _count_faqs(final_blog)
+              blog_has_pdp_link = suggested_pdp_path in final_blog
+
+              pdp_has_h1 = bool(re.search(r"^#\s+.+", final_pdp, flags=re.MULTILINE))
+              pdp_faq_count = _count_faqs(final_pdp)
+
+              # Unsupported claim leak check (ignores negation/disclaimer sentences & FAQ questions)
+              combined_lines = (final_blog + "\n" + final_pdp).splitlines()
+              negation_markers = ("not ", "no ", "without ", "does not", "do not", "doesn't", "isn't", "aren't", "never ", "unconfirmed", "not listed", "not provided", "cannot claim", "avoid assuming", "question claims", "verify ", "frequently ask about")
+              leaked_claims = []
+              for claim in unsupported_claims:
+                  pattern = re.compile(re.escape(claim), flags=re.IGNORECASE)
+                  for line in combined_lines:
+                      clean_line = re.sub(r"[*_`]", "", line).strip()
+                      if clean_line.startswith("#") and clean_line.endswith("?"):
+                          continue
+                      if pattern.search(clean_line):
+                          low = clean_line.lower()
+                          if not any(neg in low for neg in negation_markers):
+                              leaked_claims.append({"claim": claim, "line": clean_line[:160]})
+                              break
+
+              # Missing-field check
+              missing_leaks = []
+              if "product.facts.price" in missing_fields:
+                  if "offers" in product_jsonld:
+                      missing_leaks.append("Product JSON-LD illegally contains 'offers' when facts.price is missing")
+                  if re.search(r"\$\s*\d+|USD\s*\d+|\d+\s*USD", final_pdp, flags=re.IGNORECASE):
+                      missing_leaks.append("PDP contains currency/price figures when facts.price is missing")
+
+              # JSON-LD structural validity check
+              jsonld_ok = (
+                  blog_jsonld.get("@type") == "BlogPosting"
+                  and bool(blog_jsonld.get("headline"))
+                  and product_jsonld.get("@type") == "Product"
+                  and bool(product_jsonld.get("name"))
+                  and bool(product_jsonld.get("brand", {}).get("name"))
+              )
+
+              # Claim provenance JSON-path verification
+              valid_provenance = [
+                  c for c in claim_provenance
+                  if isinstance(c, dict) and c.get("json_path") in confirmed_flat
+              ]
+              provenance_ok = len(valid_provenance) >= 5
+
+              checks = {
+                  "1_word_count": {
+                      "passed": (b_min <= blog_wc <= b_max) and (p_min <= pdp_wc <= p_max),
+                      "blog_words": blog_wc,
+                      "blog_target": [b_min, b_max],
+                      "pdp_words": pdp_wc,
+                      "pdp_target": [p_min, p_max],
+                  },
+                  "2_geo_structure": {
+                      "passed": blog_has_h1 and blog_h2_count >= 3 and blog_faq_count >= 3 and blog_has_pdp_link and pdp_has_h1 and pdp_faq_count >= 3,
+                      "blog_h1": blog_has_h1,
+                      "blog_h2_count": blog_h2_count,
+                      "blog_faq_count": blog_faq_count,
+                      "blog_has_internal_link": blog_has_pdp_link,
+                      "pdp_h1": pdp_has_h1,
+                      "pdp_faq_count": pdp_faq_count,
+                  },
+                  "3_unsupported_claims_guardrail": {
+                      "passed": len(leaked_claims) == 0,
+                      "leaked_claims": leaked_claims,
+                  },
+                  "4_missing_fields_degradation": {
+                      "passed": len(missing_leaks) == 0,
+                      "missing_fields": missing_fields,
+                      "missing_leaks": missing_leaks,
+                  },
+                  "5_jsonld_validity": {
+                      "passed": jsonld_ok,
+                      "blog_type": blog_jsonld.get("@type"),
+                      "product_type": product_jsonld.get("@type"),
+                      "has_offers": "offers" in product_jsonld,
+                  },
+                  "6_claim_provenance_grounding": {
+                      "passed": provenance_ok,
+                      "verified_claim_count": len(valid_provenance),
+                      "required_min": 5,
+                  },
+              }
+              all_passed = all(c["passed"] for c in checks.values())
+
+              publish_payload = {
+                  "dataset_id": product_data.get("dataset_id") or product.get("id") or "live_run",
+                  "word_count_mode": "json_override" if (b_min, b_max) != (1200, 1500) else "pdf_default",
+                  "normalized_product_json": product_data,
+                  "final_blog_md": final_blog,
+                  "final_pdp_md": final_pdp,
+                  "blog_meta_json": blog_meta,
+                  "pdp_meta_json": pdp_meta,
+                  "blog_jsonld": blog_jsonld,
+                  "product_jsonld": product_jsonld,
+                  "claim_provenance_json": claim_provenance,
+                  "blocked_claims_json": blocked_claims,
+                  "de_ai_comparisons_json": de_ai_comparisons,
+              }
+
+              return {
+                  "final_blog_md": final_blog,
+                  "final_pdp_md": final_pdp,
+                  "blog_meta_json": json.dumps(blog_meta, ensure_ascii=False, indent=2),
+                  "pdp_meta_json": json.dumps(pdp_meta, ensure_ascii=False, indent=2),
+                  "blog_jsonld": json.dumps(blog_jsonld, ensure_ascii=False, indent=2),
+                  "product_jsonld": json.dumps(product_jsonld, ensure_ascii=False, indent=2),
+                  "claim_provenance_json": json.dumps(claim_provenance, ensure_ascii=False, indent=2),
+                  "blocked_claims_json": json.dumps(blocked_claims, ensure_ascii=False, indent=2),
+                  "de_ai_comparisons_json": json.dumps(de_ai_comparisons, ensure_ascii=False, indent=2),
+                  "qa_report_json": json.dumps({"overall_passed": all_passed, "checks": checks}, ensure_ascii=False, indent=2),
+                  "qa_passed": "PASS" if all_passed else "FAIL",
+                  "publish_payload_json": json.dumps(publish_payload, ensure_ascii=False),
+              }
+        variables:
+        - variable: normalized_product_json
+          value_selector:
+          - node_parse_product
+          - normalized_product_json
+        - variable: confirmed_facts_flat
+          value_selector:
+          - node_parse_product
+          - confirmed_facts_flat
+        - variable: missing_fields_json
+          value_selector:
+          - node_parse_product
+          - missing_fields_json
+        - variable: unsupported_claims_json
+          value_selector:
+          - node_parse_product
+          - unsupported_claims_json
+        - variable: blog_word_range
+          value_selector:
+          - node_parse_product
+          - blog_word_range
+        - variable: pdp_word_range
+          value_selector:
+          - node_parse_product
+          - pdp_word_range
+        - variable: suggested_blog_path
+          value_selector:
+          - node_parse_product
+          - suggested_blog_path
+        - variable: suggested_pdp_path
+          value_selector:
+          - node_parse_product
+          - suggested_pdp_path
+        - variable: fact_checker_raw
+          value_selector:
+          - node_fact_checker
+          - text
+        - variable: polisher_raw
+          value_selector:
+          - node_de_ai_polisher
+          - text
+        outputs:
+          final_blog_md:
+            type: string
+            children: null
+          final_pdp_md:
+            type: string
+            children: null
+          blog_meta_json:
+            type: string
+            children: null
+          pdp_meta_json:
+            type: string
+            children: null
+          blog_jsonld:
+            type: string
+            children: null
+          product_jsonld:
+            type: string
+            children: null
+          claim_provenance_json:
+            type: string
+            children: null
+          blocked_claims_json:
+            type: string
+            children: null
+          de_ai_comparisons_json:
+            type: string
+            children: null
+          qa_report_json:
+            type: string
+            children: null
+          qa_passed:
+            type: string
+            children: null
+          publish_payload_json:
+            type: string
+            children: null
+    - id: node_auto_publish
+      type: custom
+      position:
+        x: 3240
+        y: 260
+      positionAbsolute:
+        x: 3240
+        y: 260
+      sourcePosition: right
+      targetPosition: left
+      width: 244
+      height: 110
+      data:
+        type: http-request
+        title: 6B. 自动发布到本地预览站
+        desc: 自动推送结果到 preview_server.py 渲染网页；若未启动本地预览服务则容错跳过
+        selected: false
+        method: post
+        url: http://host.docker.internal:8090/api/publish
+        authorization:
+          type: no-auth
+          config: null
+        headers: Content-Type:application/json
+        params: ''
+        body:
+          type: json
+          data:
+          - id: body_json_0
+            key: ''
+            type: text
+            value: '{{#node_jsonld_qa.publish_payload_json#}}'
+        timeout:
+          connect: 5
+          read: 15
+          write: 10
+        retry_config:
+          retry_enabled: false
+          max_retries: 1
+          retry_interval: 1000
+        error_strategy: default-value
+        default_value:
+        - key: body
+          type: string
+          value: '{"published": false, "note": "Local preview_server.py not running (safe fallback)"}'
+        - key: status_code
+          type: number
+          value: 0
+        - key: headers
+          type: object
+          value: '{}'
+        variables: []
+    - id: node_end
+      type: custom
+      position:
+        x: 3560
+        y: 260
+      positionAbsolute:
+        x: 3560
+        y: 260
+      sourcePosition: right
+      targetPosition: left
+      width: 244
+      height: 140
+      data:
+        type: end
+        title: 7. 结构化输出
+        desc: 输出自动发布网页链接、双页 Markdown、Meta、JSON-LD、事实来源、去 AI 味对比与自动质检报告
+        selected: false
+        outputs:
+        - variable: published_result_json
+          value_selector:
+          - node_auto_publish
+          - body
+        - variable: qa_passed
+          value_selector:
+          - node_jsonld_qa
+          - qa_passed
+        - variable: qa_report_json
+          value_selector:
+          - node_jsonld_qa
+          - qa_report_json
+        - variable: final_blog_md
+          value_selector:
+          - node_jsonld_qa
+          - final_blog_md
+        - variable: final_pdp_md
+          value_selector:
+          - node_jsonld_qa
+          - final_pdp_md
+        - variable: blog_meta_json
+          value_selector:
+          - node_jsonld_qa
+          - blog_meta_json
+        - variable: pdp_meta_json
+          value_selector:
+          - node_jsonld_qa
+          - pdp_meta_json
+        - variable: blog_jsonld
+          value_selector:
+          - node_jsonld_qa
+          - blog_jsonld
+        - variable: product_jsonld
+          value_selector:
+          - node_jsonld_qa
+          - product_jsonld
+        - variable: claim_provenance_json
+          value_selector:
+          - node_jsonld_qa
+          - claim_provenance_json
+        - variable: blocked_claims_json
+          value_selector:
+          - node_jsonld_qa
+          - blocked_claims_json
+        - variable: de_ai_comparisons_json
+          value_selector:
+          - node_jsonld_qa
+          - de_ai_comparisons_json
+    viewport:
+      x: 0
+      y: 0
+      zoom: 0.75

@@ -1,0 +1,17 @@
+.env
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.pytest_tmp/
+*.egg-info/
+.DS_Store
+outputs/live_*/
+preview/live_*/
+DEMO_GUIDE.md
+DEMO_SCRIPT_5MIN.md
+*.mp4
+*.mov
+*.mkv
+*.avi
+*.webm

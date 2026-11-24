@@ -1,0 +1,46 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "sku": "ORB-201",
+  "name": "ORBIT Daily Steel Bottle",
+  "category": "drinkware/reusable-water-bottle",
+  "description": "ORBIT 600 mL stainless steel reusable water bottle with screw-top lid in Forest Green or Silver. Ideal for office desks, daily commutes, and day trips.",
+  "brand": {
+    "@type": "Brand",
+    "name": "ORBIT"
+  },
+  "url": "https://example.com/products/daily-steel-bottle",
+  "material": "stainless steel",
+  "color": [
+    "Forest Green",
+    "Silver"
+  ],
+  "additionalProperty": [
+    {
+      "@type": "PropertyValue",
+      "name": "type",
+      "value": "reusable water bottle"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "capacity",
+      "value": "600 mL"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "lid",
+      "value": "screw-top lid"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "care",
+      "value": "Hand wash; allow all parts to dry completely."
+    }
+  ],
+  "offers": {
+    "@type": "Offer",
+    "price": 29,
+    "priceCurrency": "USD",
+    "url": "https://example.com/products/daily-steel-bottle"
+  }
+}

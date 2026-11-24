@@ -1,0 +1,17 @@
+[
+  {
+    "claim": "wrinkle-free",
+    "source": "extra_user_request & unsupported_claims",
+    "action_taken": "Intercepted and rejected at Stage 1 & Stage 4. Replaced with honest explanation that 100% linen creases naturally and no wrinkle-free finish is confirmed in the JSON."
+  },
+  {
+    "claim": "UV-protective / UV protection",
+    "source": "extra_user_request & unsupported_claims",
+    "action_taken": "Intercepted and rejected. Explicitly answered in FAQ that no UV protection or UPF rating is confirmed in the product record."
+  },
+  {
+    "claim": "free 30-day returns / free returns",
+    "source": "extra_user_request & unsupported_claims",
+    "action_taken": "Intercepted and rejected. Directed shoppers in FAQ to verify merchant return terms at checkout rather than inventing a 30-day return policy."
+  }
+]

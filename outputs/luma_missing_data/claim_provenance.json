@@ -1,0 +1,44 @@
+[
+  {
+    "claim_id": "C1",
+    "claim_text": "Gender-neutral long-sleeve shirt style.",
+    "appears_in": "both",
+    "json_path": "product.facts.type",
+    "source_value": "gender-neutral long-sleeve shirt"
+  },
+  {
+    "claim_id": "C2",
+    "claim_text": "Made from 100% linen.",
+    "appears_in": "both",
+    "json_path": "product.facts.material",
+    "source_value": "100% linen"
+  },
+  {
+    "claim_id": "C3",
+    "claim_text": "Designed in a relaxed fit.",
+    "appears_in": "both",
+    "json_path": "product.facts.fit",
+    "source_value": "relaxed fit"
+  },
+  {
+    "claim_id": "C4",
+    "claim_text": "Offered in White and Light Blue.",
+    "appears_in": "both",
+    "json_path": "product.facts.colors",
+    "source_value": "White, Light Blue"
+  },
+  {
+    "claim_id": "C5",
+    "claim_text": "Available across sizes S, M, L, and XL.",
+    "appears_in": "both",
+    "json_path": "product.facts.sizes",
+    "source_value": "S, M, L, XL"
+  },
+  {
+    "claim_id": "C6",
+    "claim_text": "Targeted for work and commute, travel, and weekends.",
+    "appears_in": "both",
+    "json_path": "product.target_scenarios",
+    "source_value": "work and commute, travel, weekends"
+  }
+]

@@ -1,0 +1,28 @@
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "How to Choose a Linen Shirt: Fabric, Fit & Honest Care",
+  "description": "Learn how to pick a linen shirt for work, travel, and weekends without falling for unverified claims. Covers 100% linen, relaxed fit, colors, and care.",
+  "inLanguage": "en",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://example.com/blog/how-to-choose-a-linen-shirt"
+  },
+  "author": {
+    "@type": "Organization",
+    "name": "LUMA"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "LUMA"
+  },
+  "about": {
+    "@type": "Thing",
+    "name": "apparel/shirt"
+  },
+  "mentions": {
+    "@type": "Product",
+    "name": "LUMA Everyday Linen Shirt",
+    "url": "https://example.com/products/everyday-linen-shirt"
+  }
+}

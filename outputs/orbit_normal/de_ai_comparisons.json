@@ -1,0 +1,14 @@
+[
+  {
+    "id": "ORBIT-EDIT-1",
+    "section": "Blog Opening Paragraph",
+    "before_en": "Staying hydrated in today's busy world is essential, and choosing the right reusable water bottle can elevate your daily routine while seamlessly transitioning from your office desk to exciting day trips.",
+    "after_en": "Most reusable water bottles end up abandoned at the back of a kitchen cabinet for predictable reasons: they are too bulky for a commuter bag, annoying to scrub clean, or awkward to drink from at a desk. Picking one you will actually carry every weekday comes down to four practical factors—vessel material, capacity balance, lid construction, and cleaning effort—rather than chasing inflated thermal claims.",
+    "issues_removed": [
+      "Cliché opener ('Staying hydrated in today's busy world')",
+      "Marketing fluff ('elevate your daily routine', 'seamlessly transitioning', 'exciting day trips')"
+    ],
+    "rationale_zh": "把空洞的“多喝水很重要 + 无缝切换”AI 开头，替换为消费者买完水杯吃灰的三个具体真实原因，并自然引出材质、容量、杯盖和清洁四个评测维度。",
+    "rationale_en": "Replaces generic hydration platitudes with concrete reasons reusable bottles get left behind, immediately framing four verifiable evaluation criteria."
+  }
+]

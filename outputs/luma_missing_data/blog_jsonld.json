@@ -1,0 +1,28 @@
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "How to Choose a Linen Shirt for Work, Travel & Daily Wear",
+  "description": "An objective linen shirt buying guide covering 100% linen breathability, relaxed vs. slim fit, versatile light colors, and verifying missing specs safely.",
+  "inLanguage": "en",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://example.com/blog/how-to-choose-a-linen-shirt"
+  },
+  "author": {
+    "@type": "Organization",
+    "name": "LUMA"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "LUMA"
+  },
+  "about": {
+    "@type": "Thing",
+    "name": "apparel/shirt"
+  },
+  "mentions": {
+    "@type": "Product",
+    "name": "LUMA Everyday Linen Shirt",
+    "url": "https://example.com/products/everyday-linen-shirt"
+  }
+}

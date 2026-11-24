@@ -1,0 +1,51 @@
+[
+  {
+    "claim_id": "C1",
+    "claim_text": "Gender-neutral long-sleeve shirt silhouette.",
+    "appears_in": "both",
+    "json_path": "product.facts.type",
+    "source_value": "gender-neutral long-sleeve shirt"
+  },
+  {
+    "claim_id": "C2",
+    "claim_text": "Constructed from 100% linen.",
+    "appears_in": "both",
+    "json_path": "product.facts.material",
+    "source_value": "100% linen"
+  },
+  {
+    "claim_id": "C3",
+    "claim_text": "Relaxed fit for comfortable movement.",
+    "appears_in": "both",
+    "json_path": "product.facts.fit",
+    "source_value": "relaxed fit"
+  },
+  {
+    "claim_id": "C4",
+    "claim_text": "Available in White and Light Blue.",
+    "appears_in": "both",
+    "json_path": "product.facts.colors",
+    "source_value": "White, Light Blue"
+  },
+  {
+    "claim_id": "C5",
+    "claim_text": "Offered in sizes S, M, L, and XL.",
+    "appears_in": "both",
+    "json_path": "product.facts.sizes",
+    "source_value": "S, M, L, XL"
+  },
+  {
+    "claim_id": "C6",
+    "claim_text": "Priced at USD 59.",
+    "appears_in": "both",
+    "json_path": "product.facts.price.value",
+    "source_value": "59"
+  },
+  {
+    "claim_id": "C7",
+    "claim_text": "Care requires gentle wash in cold water and air drying.",
+    "appears_in": "both",
+    "json_path": "product.facts.care",
+    "source_value": "Gentle wash in cold water; air dry."
+  }
+]

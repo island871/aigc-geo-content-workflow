@@ -1,0 +1,58 @@
+[
+  {
+    "claim_id": "C1",
+    "claim_text": "Reusable water bottle product type.",
+    "appears_in": "both",
+    "json_path": "product.facts.type",
+    "source_value": "reusable water bottle"
+  },
+  {
+    "claim_id": "C2",
+    "claim_text": "Made of stainless steel.",
+    "appears_in": "both",
+    "json_path": "product.facts.material",
+    "source_value": "stainless steel"
+  },
+  {
+    "claim_id": "C3",
+    "claim_text": "Capacity is 600 mL.",
+    "appears_in": "both",
+    "json_path": "product.facts.capacity",
+    "source_value": "600 mL"
+  },
+  {
+    "claim_id": "C4",
+    "claim_text": "Equipped with a screw-top lid.",
+    "appears_in": "both",
+    "json_path": "product.facts.lid",
+    "source_value": "screw-top lid"
+  },
+  {
+    "claim_id": "C5",
+    "claim_text": "Offered in Forest Green and Silver.",
+    "appears_in": "both",
+    "json_path": "product.facts.colors",
+    "source_value": "Forest Green, Silver"
+  },
+  {
+    "claim_id": "C6",
+    "claim_text": "Priced at USD 29.",
+    "appears_in": "both",
+    "json_path": "product.facts.price.value",
+    "source_value": "29"
+  },
+  {
+    "claim_id": "C7",
+    "claim_text": "Care instructions require hand washing and allowing all parts to dry completely.",
+    "appears_in": "pdp",
+    "json_path": "product.facts.care",
+    "source_value": "Hand wash; allow all parts to dry completely."
+  },
+  {
+    "claim_id": "C8",
+    "claim_text": "Intended for office desk, daily commute, and day trips.",
+    "appears_in": "both",
+    "json_path": "product.target_scenarios",
+    "source_value": "office desk, daily commute, day trips"
+  }
+]

@@ -1,0 +1,28 @@
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "How to Choose a Reusable Water Bottle for Work & Travel",
+  "description": "Compare stainless steel vs. plastic and glass, 600 mL carry balance, screw-top lid hygiene, and hand-wash care to pick the right everyday water bottle.",
+  "inLanguage": "en",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://example.com/blog/how-to-choose-a-water-bottle"
+  },
+  "author": {
+    "@type": "Organization",
+    "name": "ORBIT"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "ORBIT"
+  },
+  "about": {
+    "@type": "Thing",
+    "name": "drinkware/reusable-water-bottle"
+  },
+  "mentions": {
+    "@type": "Product",
+    "name": "ORBIT Daily Steel Bottle",
+    "url": "https://example.com/products/daily-steel-bottle"
+  }
+}
