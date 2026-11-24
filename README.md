@@ -36,6 +36,17 @@
 
 ---
 
+## Rendered Page Previews（生成的 Blog 与产品详情页效果图）
+
+工作流运行结束后可通过节点 `6B` 自动推送到内置静态预览服务（`scripts/preview_server.py`），直接渲染包含真实 `<head>` Meta、`BlogPosting` / `Product` JSON-LD、站内互链与 QA 质检徽章的双页面：
+
+| 信息型选购指南（Buying Guide Blog） | 购买决策型详情页（Product Detail Page） |
+| :---: | :---: |
+| ![Buying Guide Blog Preview](images/preview/blog_page_preview.png) | ![Product Detail Page Preview](images/preview/pdp_page_preview.png) |
+| *含生活场景开篇、16:9 场景横幅、核心要点、对比清单、自然 FAQ 与 PDP 站内互链* | *含 1:1 详情主图、JSON 确认参数/色尺码标签、适用人群判断、购买 FAQ 与 JSON-LD 查看入口* |
+
+---
+
 ## Workflow Architecture（工作流架构）
 
 ### 1. GEO 内容生产工作流（13 节点 Dify DSL：`workflows/geo_content_workflow.yml`）
